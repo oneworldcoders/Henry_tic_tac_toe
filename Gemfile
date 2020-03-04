@@ -1,2 +1,4 @@
 source 'https://rubygems.org'
-gem 'minitest', '~> 5.3.4'
+
+gem 'rspec'
+gem 'pry'
