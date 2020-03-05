@@ -1,6 +1,6 @@
 class Board
     def initialize
-        @boxes = ['','','','','','','','','']
+        @board = ['','','','','','','','','']
     end
 
     def empty?
@@ -8,11 +8,11 @@ class Board
     end
 
     def check(position)
-        @boxes[position] == '' ? false : true
+        @board[position] == '' ? false : true
     end
 
     def move(symbol, position)
-        @boxes[position] = symbol
+        @board[position] = symbol
     end
     def print
         puts    "  |  |  \n" +

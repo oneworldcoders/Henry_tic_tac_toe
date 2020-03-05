@@ -1,5 +1,7 @@
+sudo: false
 language: ruby
+cache: bundler
+rvm use: 
+    -2.6.3
 before_install:
     - gem install bundler
-script:
-  - rspec spec/*_spec.rb
