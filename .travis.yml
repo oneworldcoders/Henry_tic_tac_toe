@@ -4,6 +4,6 @@ cache: bundler
 rvm use: 
     - 2.6.3
 script:
-    - rspec
+    - bundle exec rspec
 before_install:
     - gem install bundler
