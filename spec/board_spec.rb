@@ -1,59 +1,62 @@
-require "spec_helper"
-require "./lib/board"
+require "board"
 
-describe "Board" do
-    describe "#empty?" do
-      it "is true when a board is empty" do
-        board = Board.new
-
-        expect(board.empty?).to eq(true)
-      end
-
-      it "is false when a board has one move" do
-        board = Board.new
-
-        board.move('X', 0)
-
-        expect(board.empty?).to eq(true)
-      end
+describe Board do
+  describe "#tie?()" do
+    it "returns false given empty board" do
+      grid = [0, 1, 2, 3, 4, 5, 6, 7, 8]
+      board = Board.new(grid)
+      expect(board.tie?("O", "X")).to be false
     end
 
-    describe "#move" do
-      it "places a move on the board" do
-        board = Board.new
-
-        board.move('X', 0)
-
-        expect(board.check(0)).to eq(true)
-      end
-    end
-
-    describe "#check" do
-      it "shows the box has not been occupied" do
-        board = Board.new
-
-        expect(board.check(0)).to eq(false)
-      end
-
-      it "shows the box has been occupied" do
-        board = Board.new
-
-        board.move('X', 0)
-
-        expect(board.check(0)).to eq(true)
-      end
-    end
-    describe "#print" do
-      it "prints an empty board" do
-        board = Board.new
-
-        expect { board.print }.to output( "  |  |  \n" +
-                                          "_______ \n" +
-                                          "  |  |  \n" +
-                                          "_______ \n" +
-                                          "  |  |  \n").to_stdout
-      end
+    it "returns true given marked board with no win" do
+      grid = ["X", "O", "X", "O", "X", "O", "O", "X", "O"]
+      board = Board.new(grid)
+      expect(board.tie?("O", "X")).to be true
     end
   end
 
- 
+  describe "#win?()" do
+    it "returns false given board with no win" do
+      grid = ["X", "O", "X", "O", "X", "O", "O", "X", "O"]
+      board = Board.new(grid)
+      expect(board.win?).to be false
+    end
+
+    it "returns true given board with a win - row" do
+      grid = ["X", "X", "X", 3, 4, 5, 6, 7, 8]
+      board = Board.new(grid)
+      expect(board.win?).to be true
+    end
+
+    it "returns true given board with a win - column" do
+      grid = ["X", 1, 2, "X", 4, 5, "X", 7, 8]
+      board = Board.new(grid)
+      expect(board.win?).to be true
+    end
+
+    it "returns true given board with a win - diagonal" do
+      grid = ["X", 1, 2, 3, "X", 5, 6, 7, "X"]
+      board = Board.new(grid)
+      expect(board.win?).to be true
+    end
+  end
+
+  describe "#mark_grid()" do
+    it "returns a marked board given cell '0'" do
+      grid = [0, 1, 2, 3, 4, 5, 6, 7, 8]
+      board = Board.new(grid)
+      mark = "X"
+      cell = 0
+      board.mark_grid(grid, cell, mark)
+      expect(board.grid).to eql(["X", 1, 2, 3, 4, 5, 6, 7, 8])
+    end
+  end
+
+  describe "#available_spaces()" do
+    it "returns array of available spaces" do
+      grid = ["X", "O", 2, 3, "X", 5, "O", 7, "X"]
+      board = Board.new(grid)
+      expect(board.available_spaces("O", "X")).to eql([2, 3, 5, 7])
+    end
+  end
+end

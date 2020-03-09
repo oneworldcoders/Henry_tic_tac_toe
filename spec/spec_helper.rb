@@ -1,17 +1,23 @@
+require 'coveralls'
+require 'simplecov'
+require 'simplecov-console'
+Coveralls.wear!
+SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter.new(
+  [
+    SimpleCov::Formatter::Console,
+  ]
+)
+SimpleCov.start
+
 RSpec.configure do |config|
-    config.order = :default
+  config.expect_with :rspec do |expectations|
+    expectations.include_chain_clauses_in_custom_matcher_descriptions = true
+  end
+
+  config.mock_with :rspec do |mocks|
+    mocks.verify_partial_doubles = true
+  end
+
+  config.shared_context_metadata_behavior = :apply_to_host_groups
+
 end
-
-# Define the variabe board
-cell_1 = "X"
-cell_2 = " "
-cell_3 = "O"
-
-cell_4 = "X"
-cell_5 = "O"
-cell_6 = "X"
-
-cell_7 = "X"
-cell_8 = "O"
-cell_9 = "X"
-
