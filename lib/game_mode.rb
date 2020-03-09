@@ -5,4 +5,3 @@ class GameMode
       display.get_valid_game_mode_response
     end
   end
-  
