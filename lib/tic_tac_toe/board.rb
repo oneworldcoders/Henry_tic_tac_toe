@@ -41,9 +41,14 @@ module TicTacToe
       puts @rules, ""
     end
   
-    def check(a, b, player)
+    def check_box_for_player(a, b, player)
       @boxNumbers[a][b] == player
     end
+
+    def validate(position)
+      position == @boxNumbers[0][0]
+    end
+
   
     def move(position, player)
       case position
@@ -79,16 +84,16 @@ module TicTacToe
   
     def win(player)
       #horizontal wins
-      return true if (0..2).all? { |i| check(0, i, player) }
-      return true if (0..2).all? { |i| check(1, i, player) }
-      return true if (0..2).all? { |i| check(2, i, player) }
+      return true if (0..2).all? { |i| check_box_for_player(0, i, player) }
+      return true if (0..2).all? { |i| check_box_for_player(1, i, player) }
+      return true if (0..2).all? { |i| check_box_for_player(2, i, player) }
       #vertical wins
-      return true if (0..2).all? { |i| check(i, 0, player) }
-      return true if (0..2).all? { |i| check(i, 1, player) }
-      return true if (0..2).all? { |i| check(i, 2, player) }
+      return true if (0..2).all? { |i| check_box_for_player(i, 0, player) }
+      return true if (0..2).all? { |i| check_box_for_player(i, 1, player) }
+      return true if (0..2).all? { |i| check_box_for_player(i, 2, player) }
       #diagonal wins
-      return true if (0..2).all? { |i| check(i, i, player) }
-      return true if (0..2).all? { |i| check(i, 2 - i, player) }
+      return true if (0..2).all? { |i| check_box_for_player(i, i, player) }
+      return true if (0..2).all? { |i| check_box_for_player(i, 2 - i, player) }
     end
   end
 end

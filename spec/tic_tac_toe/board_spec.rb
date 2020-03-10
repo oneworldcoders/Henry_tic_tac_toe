@@ -9,17 +9,17 @@ describe TicTacToe::Board do
         end
     end
 
-    describe "#check" do
+    describe "#check_box_for_player" do
         it "checks an empty position" do
             board = TicTacToe::Board.new
 
-            expect(board.check(0, 0, '1')).to eq(true)
+            expect(board.check_box_for_player(0, 0, '1')).to eq(true)
         end
 
         it "returns false when a box does not have a symbol" do
             board = TicTacToe::Board.new
 
-            expect(board.check(0, 0, "x")).to eq(false)
+            expect(board.check_box_for_player(0, 0, "x")).to eq(false)
         end
 
         it "returns true when a box does have a symbol" do
@@ -27,7 +27,7 @@ describe TicTacToe::Board do
 
             board.move("1", "x")
 
-            expect(board.check(0, 0, "x")).to eq(true)
+            expect(board.check_box_for_player(0, 0, "x")).to eq(true)
         end
     end
 
@@ -36,6 +36,19 @@ describe TicTacToe::Board do
             board = TicTacToe::Board.new
             expect {board.show}.to output("| | | |\n| | | |\n| | | |\n").to_stdout
         end
+    end
+end
+
+describe "disllow override" do
+    it "allows a move when a boxnumber is empty" do
+        board = TicTacToe::Board.new
+        expect(board.validate("1")).to eq(true)
+    end
+
+    it "does not allow a move when the box is already taken" do
+        board = TicTacToe::Board.new
+        board.move("1", "x")
+        expect(board.validate("1")).to be false
     end
 end
 

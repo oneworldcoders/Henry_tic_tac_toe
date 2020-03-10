@@ -15,6 +15,7 @@ class Run
         puts "It's Player #{player[0]}'s turn."
         input = @input.gets.chomp
         ttt.move input, player[0]
+        
         ttt.show 
         break if ttt.win player[0]
         player[0], player[1] = player[1], player[0]
