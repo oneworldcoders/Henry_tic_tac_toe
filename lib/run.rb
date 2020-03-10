@@ -1,20 +1,25 @@
-require_relative "game"
-require_relative "board"
-require_relative "display"
-require_relative "console"
-require_relative "message"
-require_relative "validator"
-require_relative "player"
-require_relative "human_player"
-require_relative "game_factory"
-require_relative "player_factory"
-require_relative "game_mode"
-require_relative "display_board"
+require_relative "./tic_tac_toe/board"
 
+class Run
+    def initialize(input = STDIN)
+        @input = input
+    end
 
-validator = Validator.new
-display = Display.new(validator)
-player_factory = PlayerFactory.new(display)
-game_mode = GameMode.new
-game_factory = GameFactory.new(player_factory, game_mode, display)
-game_factory.create_game.start_game
+    def start_game 
+        ttt = TicTacToe::Board.new
+        player = ["x", "o"]
+
+        ttt.show_rules
+
+        loop do
+        puts "It's Player #{player[0]}'s turn."
+        input = @input.gets.chomp
+        ttt.move input, player[0]
+        ttt.show 
+        break if ttt.win player[0]
+        player[0], player[1] = player[1], player[0]
+        end
+
+        puts "Congrats, Player #{player[0]} you win 🎉🎉"
+    end
+end
